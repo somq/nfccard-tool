@@ -1,0 +1,28 @@
+{
+  "name": "ndef-parser",
+  "description":
+    "Feed me with a raw nfc card output and I will drop you tjhe ndef message if I can find one.",
+  "version": "1.0.2",
+  "author": "somq <dev.soma@protonmail.com>",
+  "bugs": {
+    "url": "https://github.com/somq/ndef-parser/issues",
+    "email": "dev.soma@protonmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somq/ndef-parser.git"
+  },
+  "contributors": ["somq <dev.soma@protonmail.com>"],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@taptrack/ndef": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0"
+  }
+}
