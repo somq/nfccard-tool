@@ -162,12 +162,6 @@ We are natively using https://github.com/TapTrack/NdefJS but you could give a tr
 If you are looking for a nfc tag reading library take a look at https://github.com/pokusew/nfc-pcsc
 
 
-## Contributors
-
-| Name     |
-| -------- |
-| **somq** |
-
 
 ## License
 
