@@ -1,7 +1,5 @@
 # ndef-parser
 
-[![build status](https://img.shields.io/travis/somq/ndef-parser.svg)](https://travis-ci.org/somq/ndef-parser)
-
 
 > Feed me with a raw nfc card output and I will drop you tjhe ndef message if I can find one.
 
