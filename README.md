@@ -122,7 +122,7 @@ console.log(tagHeaderValues);
 * `tagLengthToReadFromBlock4` *int* - bytes to read starting at block 4 to get the full ndef message
 
 
-#### Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
+### Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
 Now that we know if our tag contains a valid ndef message we can read one more time the tag where it's located.
 Just then we will be able to use a third party library to parse the ndef message.
 ```js
