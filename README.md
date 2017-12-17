@@ -9,7 +9,6 @@
 * [Install](#install)
 * [Usage](#usage)
 * [Third party](#thirdparty)
-* [Contributors](#contributors)
 * [License](#license)
 
 
