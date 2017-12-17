@@ -112,7 +112,7 @@ console.log(tagHeaderValues);
   //   tagLengthToReadFromBlock4: 135 }
 
 ```
-ndef.parseHeader(buffer) returns:
+**ndef.parseHeader(buffer) returns**:
 * `isTagFormatedAsNdef` *boolean* - is tag formated as ndef ?
 * `type2TagSpecification` *string* - hex string of the type2 tag spec
 * `maxNdefMessageSize` *int* - max ndef message size provided by the tag
