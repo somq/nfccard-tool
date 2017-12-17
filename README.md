@@ -47,15 +47,16 @@ Here is a buffer of the first 4 blocks of a nfc tag (ntag216) containg 2 ndef te
 
 ```js
 // Let's mock it by creating a new buffer:
-
 let tagBufferBlocks0to4 = new Buffer('046e38da5a215280a9480000e1106d0003859101');
+
 console.log('tagBufferBlocks0to4', tagBufferBlocks0to4);
 // logs: <Buffer 04 6e 38 da 5a 21 52 80 a9 48 00 00 e1 10 6d 00 03 85 91 01> (here we go!)
 
+
 // We want to parse this header
+// ndef.parseHeader will return an obj containing headers statements
 let tagHeaderValues = ndef.parseHeader(tagBufferBlocks0to4);
 
-// ndef.parseHeader will return an obj containing headers statements:
 console.log(tagHeaderValues);
   // logs:
   // { isTagFormatedAsNdef: true,
