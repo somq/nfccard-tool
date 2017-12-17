@@ -32,7 +32,7 @@ yarn add ndef-parser
 
 ## Usage
 ### Complete example:
-#### Copy/pasta this example:
+#### Copy/pasta example:
 ```js
 let ndef = require('ndef-parser');
 
@@ -78,7 +78,6 @@ if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef 
 ---
 
 ### Detailed explanations
-
 ####Require the lib:
 ```js
 let ndef = require('ndef-parser');
