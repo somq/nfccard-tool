@@ -38,8 +38,8 @@ let ndef = require('ndef-parser');
 
 ```
 
-####Parse the tag header `ndef.parseHeader(buffer)`
-##### In order to know where the ndef message is we parse the header:
+Parse the tag header `ndef.parseHeader(buffer)`
+In order to know where the ndef message is we parse the header:
 ```js
 
 // Here is a buffer of the first 4 blocks of a nfc tag (ntag216) containg 2 ndef text records:
@@ -65,7 +65,7 @@ console.log(tagHeaderValues);
   //   tagLengthToReadFromBlock4: 135 }
 
 ```
-####ndef.parseHeader(buffer) returns:
+ndef.parseHeader(buffer) returns:
 `isTagFormatedAsNdef` *boolean* - is tag formated as ndef ?
 `type2TagSpecification` *string* - hex string of the type2 tag spec
 `maxNdefMessageSize` *int* - max ndef message size provided by the tag
@@ -75,7 +75,7 @@ console.log(tagHeaderValues);
 `tagLengthToReadFromBlock4` *int* - bytes to read starting at block 4 to get the full ndef message
 
 
-####Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
+Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
 Now that we know if our tag contains a valid ndef message we can read one more time the tag where it's located.
 Just then we will be able to use a third party library to parse the ndef message.
 ```js
@@ -130,4 +130,3 @@ If you are looking for a nfc tag reading library take a look at https://github.c
 
 [yarn]: https://yarnpkg.com/
 
-"# ndef-parser"
