@@ -76,13 +76,13 @@ if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef 
 
 ### Detailed explanations
 
-#### Require the lib:
+#### 1 - Require the lib:
 ```js
 let ndef = require('ndef-parser');
 
 ```
 
-Parse the tag header `ndef.parseHeader(buffer)`
+#### 2 - Parse the tag header `ndef.parseHeader(buffer)`
 In order to know where the ndef message is we parse the header:
 
 Here is a buffer of the first 4 blocks of a nfc tag (ntag216) containg 2 ndef text records:
@@ -122,7 +122,7 @@ console.log(tagHeaderValues);
 * `tagLengthToReadFromBlock4` *int* - bytes to read starting at block 4 to get the full ndef message
 
 
-### Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
+### 3 - Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
 Now that we know if our tag contains a valid ndef message we can read one more time the tag where it's located.
 Just then we will be able to use a third party library to parse the ndef message.
 ```js
