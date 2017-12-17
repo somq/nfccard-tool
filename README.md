@@ -113,13 +113,13 @@ console.log(tagHeaderValues);
 
 ```
 ndef.parseHeader(buffer) returns:
-`isTagFormatedAsNdef` *boolean* - is tag formated as ndef ?
-`type2TagSpecification` *string* - hex string of the type2 tag spec
-`maxNdefMessageSize` *int* - max ndef message size provided by the tag
-`hasTagReadPermissions` *boolean* - is tag read locked ?
-`hasTagANdefMessage` *boolean* - tag has a ndef message ?
-`ndefMessageLength` *int* - ndef message length
-`tagLengthToReadFromBlock4` *int* - bytes to read starting at block 4 to get the full ndef message
+* `isTagFormatedAsNdef` *boolean* - is tag formated as ndef ?
+* `type2TagSpecification` *string* - hex string of the type2 tag spec
+* `maxNdefMessageSize` *int* - max ndef message size provided by the tag
+* `hasTagReadPermissions` *boolean* - is tag read locked ?
+* `hasTagANdefMessage` *boolean* - tag has a ndef message ?
+* `ndefMessageLength` *int* - ndef message length
+* `tagLengthToReadFromBlock4` *int* - bytes to read starting at block 4 to get the full ndef message
 
 
 Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
