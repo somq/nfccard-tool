@@ -1,2 +1,2 @@
-let ndef =  require('./lib/ndef-parser');
+const ndef =  require('./lib/ndef-parser');
 module.exports = ndef;

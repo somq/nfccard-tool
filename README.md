@@ -31,7 +31,7 @@ yarn add ndef-parser
 ### Complete example:
 #### Copy/pasta example:
 ```js
-let ndef = require('ndef-parser');
+const ndef = require('ndef-parser');
 
 // Let's mock it by creating a new buffer:
 let tagBufferBlocks0to4 = new Buffer('046e38da5a215280a9480000e1106d00032ad101', 'hex');
@@ -78,7 +78,7 @@ if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef 
 
 #### 1 - Require the lib:
 ```js
-let ndef = require('ndef-parser');
+const ndef = require('ndef-parser');
 
 ```
 
