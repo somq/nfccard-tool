@@ -78,7 +78,8 @@ if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef 
 ---
 
 ### Detailed explanations
-####Require the lib:
+
+#### Require the lib:
 ```js
 let ndef = require('ndef-parser');
 
