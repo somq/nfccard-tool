@@ -1,23 +1,14 @@
-let ndef = require('./lib/ndef-parser');
-
-/**
- * Header parsing
- */
-
-// Here is a buffer of the first 4 blocks of a nfc tag (ntag216) containg 2 ndef text records:
-//         - <Buffer 04 6e 38 da 5a 21 52 80 a9 48 00 00 e1 10 6d 00 03 85 91 01>
+let ndef = require('ndef-parser');
 
 // Let's mock it by creating a new buffer:
+let tagBufferBlocks0to4 = new Buffer('046e38da5a215280a9480000e1106d00032ad101', 'hex');
 
-
-// var tagBufferBlocks0to4 = await reader.read(0, 20);
-let tagBufferBlocks0to4 = new Buffer('046e38da5a215280a9480000e1106d0003859101');
-console.log('tagBufferBlocks0to4', tagBufferBlocks0to4); // <Buffer 04 6e 38 da 5a 21 52 80 a9 48 00 00 e1 10 6d 00 03 85 91 01>
-
-
+// We want to parse this header
 let tagHeaderValues = ndef.parseHeader(tagBufferBlocks0to4);
 
+// ndef.parseHeader will return an obj containing headers statements:
 console.log(tagHeaderValues);
+  // logs:
   // { isTagFormatedAsNdef: true,
   //   type2TagSpecification: '6e',
   //   maxNdefMessageSize: 128,
@@ -26,16 +17,14 @@ console.log(tagHeaderValues);
   //   ndefMessageLength: 133,
   //   tagLengthToReadFromBlock4: 135 }
 
-
-/**
- * ndef buffer extraction
- */
-// check if tag is readable and has a ndef message
+  // Check if our tag is readable and has a ndef message
 if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef && tagHeaderValues.hasTagANdefMessage) {
-  // var tagBufferFromBlock4 = await reader.read(4, tagHeaderValues.tagLengthToReadFromBlock4);
-  console.log(tagBufferFromBlock4); // ndefMessageBuffer <Buffer 91 01 28 54 02 65 6e 49 27 6d 20 74 68 65 20 66 69 72 73 74 20 6e 64 65 66 20 72 65 63 6f 72 64 20 6f 66 20 74 68 69 73 20 74 61 67 51 01 55 54 02 65 ... >
 
-  // ndef parsing
+  // And here is our isolated ndef message !
+  let tagBufferFromBlock4 = new Buffer('032ad101265402656e4865792074686572652c2069276d2061206e6465662074657874207265636f72642021', 'hex');
+
+
+  // ndef.parseNdef uses @taptrack/ndef which supports text and uri parsing, but you obviously can use anything to parse the ndef message
   let parsedRecords = ndef.parseNdef(tagBufferFromBlock4);
 
   console.log(parsedRecords)

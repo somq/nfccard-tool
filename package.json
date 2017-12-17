@@ -1,28 +1,62 @@
 {
-  "name": "ndef-parser",
-  "description":
-    "Feed me with a raw nfc card output and I will drop you tjhe ndef message if I can find one.",
-  "version": "1.0.2",
-  "author": "somq <dev.soma@protonmail.com>",
+  "_from": "ndef-parser",
+  "_id": "ndef-parser@1.0.3",
+  "_inBundle": false,
+  "_integrity": "sha512-ndVdK0xlosUVNg95lWQoCAHIyQ8OoQg8kvv38qjLAeCfUrZUaN1KPii6HIO3wVr2qDlWKU/0AH+1s7o0g/06nQ==",
+  "_location": "/ndef-parser",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ndef-parser",
+    "name": "ndef-parser",
+    "escapedName": "ndef-parser",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ndef-parser/-/ndef-parser-1.0.3.tgz",
+  "_shasum": "d1809097bdb76338c17b40ecf441847febceb267",
+  "_spec": "ndef-parser",
+  "_where": "J:\\__DevSSD__\\nfc-ndef-module\\testmod",
+  "author": {
+    "name": "somq",
+    "email": "dev.soma@protonmail.com"
+  },
   "bugs": {
     "url": "https://github.com/somq/ndef-parser/issues",
     "email": "dev.soma@protonmail.com"
   },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "somq",
+      "email": "dev.soma@protonmail.com"
+    }
+  ],
+  "dependencies": {
+    "@taptrack/ndef": "^1.0.3"
+  },
+  "deprecated": false,
+  "description": "Feed me with a raw nfc card output and I will drop you tjhe ndef message if I can find one.",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0"
+  },
+  "homepage": "https://github.com/somq/ndef-parser#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "ndef-parser",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/somq/ndef-parser.git"
   },
-  "contributors": ["somq <dev.soma@protonmail.com>"],
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC",
-  "dependencies": {
-    "@taptrack/ndef": "^1.0.3"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0"
-  }
+  "version": "1.0.3"
 }
