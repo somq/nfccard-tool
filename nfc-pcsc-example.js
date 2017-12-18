@@ -1,5 +1,5 @@
 
-const ndef = require('ndef-parser');
+const ndef = require('nfccard-parser');
 
 // without Babel in ES2015
 const { NFC } = require('nfc-pcsc');
@@ -21,20 +21,20 @@ nfc.on('reader', reader => {
 
 
   reader.on('card', async card => {
-    
+
       console.log();
       console.log(`card detected`, card);
-    
+
       // example reading 12 bytes assuming containing text in utf8
       try {
-    
+
         // reader.read(blockNumber, length, blockSize = 4, packetSize = 16)
         const data = await reader.read(0, 20); // starts reading in block 4, continues to 5 and 6 in order to read 12 bytes
         console.log(`data read`, data);
 
 
         /**
-         * Here starts ndef-parser job
+         * Here starts nfccard-parser job
          */
 
         let tagBufferBlocks0to4 = data;
@@ -82,10 +82,10 @@ nfc.on('reader', reader => {
         console.error(`error when reading data`, err);
       }
 
-    
+
     });
-	
-	reader.on('card.off', card => {	
+
+	reader.on('card.off', card => {
 		console.log(`${reader.reader.name}  card removed`, card);
 	});
 

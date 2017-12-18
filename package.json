@@ -1,16 +1,16 @@
 {
-  "_from": "ndef-parser",
-  "_id": "ndef-parser@1.0.3",
+  "_from": "nfccard-parser",
+  "_id": "nfccard-parser@1.0.3",
   "_inBundle": false,
   "_integrity": "sha512-ndVdK0xlosUVNg95lWQoCAHIyQ8OoQg8kvv38qjLAeCfUrZUaN1KPii6HIO3wVr2qDlWKU/0AH+1s7o0g/06nQ==",
-  "_location": "/ndef-parser",
+  "_location": "/nfccard-parser",
   "_phantomChildren": {},
   "_requested": {
     "type": "tag",
     "registry": true,
-    "raw": "ndef-parser",
-    "name": "ndef-parser",
-    "escapedName": "ndef-parser",
+    "raw": "nfccard-parser",
+    "name": "nfccard-parser",
+    "escapedName": "nfccard-parser",
     "rawSpec": "",
     "saveSpec": null,
     "fetchSpec": "latest"
@@ -19,16 +19,16 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/ndef-parser/-/ndef-parser-1.0.3.tgz",
+  "_resolved": "https://registry.npmjs.org/nfccard-parser/-/nfccard-parser-1.0.3.tgz",
   "_shasum": "d1809097bdb76338c17b40ecf441847febceb267",
-  "_spec": "ndef-parser",
+  "_spec": "nfccard-parser",
   "_where": "J:\\__DevSSD__\\nfc-ndef-module\\testmod",
   "author": {
     "name": "somq",
     "email": "dev.soma@protonmail.com"
   },
   "bugs": {
-    "url": "https://github.com/somq/ndef-parser/issues",
+    "url": "https://github.com/somq/nfccard-parser/issues",
     "email": "dev.soma@protonmail.com"
   },
   "bundleDependencies": false,
@@ -47,16 +47,16 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0"
   },
-  "homepage": "https://github.com/somq/ndef-parser#readme",
+  "homepage": "https://github.com/somq/nfccard-parser#readme",
   "license": "ISC",
   "main": "index.js",
-  "name": "ndef-parser",
+  "name": "nfccard-parser",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/somq/ndef-parser.git"
+    "url": "git+https://github.com/somq/nfccard-parser.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.7"
+  "version": "0.0.1"
 }

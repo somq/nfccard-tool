@@ -1,2 +1,2 @@
-const ndef =  require('./lib/ndef-parser');
+const ndef =  require('./lib/nfccard-parser');
 module.exports = ndef;
