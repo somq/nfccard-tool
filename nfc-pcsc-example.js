@@ -1,5 +1,5 @@
 
-const ndef = require('nfccard-parser');
+const ndef = require('nfccard-tool');
 
 // without Babel in ES2015
 const { NFC } = require('nfc-pcsc');
