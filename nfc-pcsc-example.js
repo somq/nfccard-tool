@@ -50,8 +50,21 @@ nfc.on('reader', reader => {
           console.log('NDEFMessage:', NDEFRawMessage);
 
           console.log('nfcCard.parseNDEF(NDEFRawMessage): ', nfcCard.parseNDEF(NDEFRawMessage));
+        } else {
+          console.log('Could not parse anything from this tag: empty, unreadable, wrong NDEF format ..?')
         }
 
+
+/**
+ * WRITE MESSAGE AND ITS RECORDS 
+ */
+const message = [
+  { type: 'text', text: 'I\'m a text message', language: 'en' },
+  { type: 'uri', uri: 'https://github.com/somq' },
+  { type: 'aar', packageName: 'https://github.com/somq' },
+]
+
+ nfcCard.prepareBytesToWrite(message, tag);
 
 
       } catch (err) {
