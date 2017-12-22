@@ -1,7 +1,6 @@
 
-const ndef = require('nfccard-tool');
+const nfcCard = require('./lib/nfccard-tool');
 
-// without Babel in ES2015
 const { NFC } = require('nfc-pcsc');
 
 const nfc = new NFC(); // optionally you can pass logger
@@ -28,53 +27,30 @@ nfc.on('reader', reader => {
       // example reading 12 bytes assuming containing text in utf8
       try {
 
-        // reader.read(blockNumber, length, blockSize = 4, packetSize = 16)
-        const data = await reader.read(0, 20); // starts reading in block 4, continues to 5 and 6 in order to read 12 bytes
-        console.log(`data read`, data);
+        
+        /**
+         *  Read block 0 to 6 in order to parse tag information
+         */
+        const blocks0to6 = await reader.read(0, 23); // starts reading in block 0 until 6
 
+        const tag = nfcCard.parseInfo(blocks0to6);
+        console.log('tag info:', tag);
 
         /**
-         * Here starts nfccard-parser job
+         *  Read the NDEF message and parse it if it's supposed there is one
          */
 
-        let tagBufferBlocks0to4 = data;
-
-        // We want to parse this header
-        let tagHeaderValues = ndef.parseHeader(tagBufferBlocks0to4);
-
-        // ndef.parseHeader will return an obj containing headers statements:
-        console.log(tagHeaderValues);
-          // logs:
-          // { isTagFormatedAsNdef: true,
-          //   type2TagSpecification: '6e',
-          //   maxNdefMessageSize: 128,
-          //   hasTagReadPermissions: true,
-          //   hasTagANdefMessage: true,
-          //   ndefMessageLength: 133,
-          //   tagLengthToReadFromBlock4: 135 }
-
-          // Check if our tag is readable and has a ndef message
-        if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef && tagHeaderValues.hasTagANdefMessage) {
-
-          // And here is our isolated ndef message !
-          let tagBufferFromBlock4 = await reader.read(4, tagHeaderValues.tagLengthToReadFromBlock4);;
+        if(nfcCard.isFormatedAsNDEF() && nfcCard.hasReadPermissions() && nfcCard.hasNDEFMessage()) {
 
 
-          // ndef.parseNdef uses @taptrack/ndef which supports text and uri parsing, but you obviously can use anything to parse the ndef message
-          let parsedRecords = ndef.parseNdef(tagBufferFromBlock4);
+          /**
+           * Get NDEF MESSAGE as buffer
+           */
+          const NDEFRawMessage = await reader.read(4, nfcCard.getNDEFMessageLengthToRead()); // starts reading in block 0 until 6
+          console.log('NDEFMessage:', NDEFRawMessage);
 
-          console.log(parsedRecords)
-          // [{
-          //   language: 'en',
-          //   content: 'I\'m the first ndef record of this tag'
-          // },
-          // { language: 'en',
-          //   content: 'Looks like I\'m the second record of this tag, and a plaintext type one by the way.'
-          // }]
+          console.log('nfcCard.parseNDEF(NDEFRawMessage): ', nfcCard.parseNDEF(NDEFRawMessage));
         }
-
-
-
 
 
 

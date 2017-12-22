@@ -39,14 +39,13 @@
     }
   ],
   "dependencies": {
-    "@taptrack/ndef": "^1.0.3"
+    "@taptrack/ndef": "^1.0.3",
+    "ndef-lib": "0.0.7",
+    "nfc-pcsc": "^0.6.1"
   },
   "deprecated": false,
   "description": "Feed me with a raw nfc card output and I will drop you tjhe ndef message if I can find one.",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0"
-  },
+  "devDependencies": {},
   "homepage": "https://github.com/somq/nfccard-parser#readme",
   "license": "ISC",
   "main": "index.js",
