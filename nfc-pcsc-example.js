@@ -18,10 +18,8 @@ nfc.on('reader', reader => {
 	// reader.aid = 'F222222222';
 
 
-
   reader.on('card', async card => {
 
-      console.log();
       console.log(`card detected`, card);
 
       // example reading 12 bytes assuming containing text in utf8
@@ -29,6 +27,11 @@ nfc.on('reader', reader => {
 
 
         /**
+         * READ MESSAGE AND ITS RECORDS
+         */
+
+        /**
+         *  1 - READ HEADER
          *  Read block 0 to 6 in order to parse tag information
          */
         const blocks0to6 = await reader.read(0, 23); // starts reading in block 0 until 6
@@ -37,38 +40,35 @@ nfc.on('reader', reader => {
         console.log('tag info:', tag);
 
         /**
-         *  Read the NDEF message and parse it if it's supposed there is one
+         *  2 - Read the NDEF message and parse it if it's supposed there is one
          */
-
         if(nfcCard.isFormatedAsNDEF() && nfcCard.hasReadPermissions() && nfcCard.hasNDEFMessage()) {
-
 
           /**
            * Get NDEF MESSAGE as buffer
            */
           const NDEFRawMessage = await reader.read(4, nfcCard.getNDEFMessageLengthToRead()); // starts reading in block 0 until 6
-          console.log('NDEFMessage:', NDEFRawMessage);
 
-          console.log('nfcCard.parseNDEF(NDEFRawMessage): ', nfcCard.parseNDEF(NDEFRawMessage));
+          console.log('NDEFMessage:', nfcCard.parseNDEF(NDEFRawMessage));
         } else {
-          console.log('Could not parse anything from this tag: empty, unreadable, wrong NDEF format ..?')
+          console.log('Could not parse anything from this tag: \n The tag is either empty, locked, has a wrong NDEF format or is unreadable.')
         }
 
 
         /**
          * WRITE MESSAGE AND ITS RECORDS
          */
-        // const message = [
-        //   { type: 'text', text: 'I\'m a text message', language: 'en' },
-        //   { type: 'uri', uri: 'https://github.com/somq' },
-        //   { type: 'aar', packageName: 'https://github.com/somq' },
-        // ]
+        const message = [
+          { type: 'text', text: 'I\'m a text message', language: 'en' },
+          { type: 'uri', uri: 'https://github.com/somq' },
+          { type: 'aar', packageName: 'https://github.com/somq' },
+        ]
 
         const rawDataToWrite = nfcCard.prepareBytesToWrite(message);
-
-        console.log(rawDataToWrite)
-
-        // const preparationWrite = await reader.write(4, rawDataToWrite.preparationWrite);
+        // const preparationWrite = await reader.write(4, rawDataToWrite.preparedData);
+        // if (preparationWrite) {
+        //   console.log('Data have been written successfully.')
+        // }
 
         // @TODO: Find a solution to write 1 byte to be able to respect the NFCForum-TS-Type-2-Tag_1.1.pdf spec.
         // if (preparationWrite) {
