@@ -27,7 +27,7 @@ nfc.on('reader', reader => {
       // example reading 12 bytes assuming containing text in utf8
       try {
 
-        
+
         /**
          *  Read block 0 to 6 in order to parse tag information
          */
@@ -55,16 +55,27 @@ nfc.on('reader', reader => {
         }
 
 
-/**
- * WRITE MESSAGE AND ITS RECORDS 
- */
-const message = [
-  { type: 'text', text: 'I\'m a text message', language: 'en' },
-  { type: 'uri', uri: 'https://github.com/somq' },
-  { type: 'aar', packageName: 'https://github.com/somq' },
-]
+        /**
+         * WRITE MESSAGE AND ITS RECORDS
+         */
+        // const message = [
+        //   { type: 'text', text: 'I\'m a text message', language: 'en' },
+        //   { type: 'uri', uri: 'https://github.com/somq' },
+        //   { type: 'aar', packageName: 'https://github.com/somq' },
+        // ]
 
- nfcCard.prepareBytesToWrite(message, tag);
+        const rawDataToWrite = nfcCard.prepareBytesToWrite(message);
+
+        console.log(rawDataToWrite)
+
+        // const preparationWrite = await reader.write(4, rawDataToWrite.preparationWrite);
+
+        // @TODO: Find a solution to write 1 byte to be able to respect the NFCForum-TS-Type-2-Tag_1.1.pdf spec.
+        // if (preparationWrite) {
+        //   const secondWrite = await reader.write(4, rawDataToWrite.finalWrite)
+        // }  else {
+        //   console.log('Something went wrong while trying to perform preparation write')
+        // }
 
 
       } catch (err) {
