@@ -65,10 +65,10 @@ nfc.on('reader', reader => {
         ]
 
         const rawDataToWrite = nfcCard.prepareBytesToWrite(message);
-        // const preparationWrite = await reader.write(4, rawDataToWrite.preparedData);
-        // if (preparationWrite) {
-        //   console.log('Data have been written successfully.')
-        // }
+        const preparationWrite = await reader.write(4, rawDataToWrite.preparedData);
+        if (preparationWrite) {
+          console.log('Data have been written successfully.')
+        }
 
         // @TODO: Find a solution to write 1 byte to be able to respect the NFCForum-TS-Type-2-Tag_1.1.pdf spec.
         // if (preparationWrite) {
