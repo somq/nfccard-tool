@@ -293,7 +293,7 @@ Only a part of [Type 2 tag specification](docs/NFCForum-TS-Type-2-Tag_1.1.pdf) i
 This lib does not support yet:
 * Dynamical memory structure
 * Lock preparing
-* ... *some are probably missing*
+* *... some are probably missing*
 
 
 ```
