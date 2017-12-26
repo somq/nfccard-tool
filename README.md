@@ -15,6 +15,8 @@
   * [3 - Parse a NDEF message:](#2---parse-a-ndef-message)
   * [4 - Prepare a NDEF message:](#3---prepare-a-ndef-message)
 * [API](#api)
+  * [Methods](#methods)
+  * [tag object](#tag-object)
 * [Third party](#thirdparty)
 * [License](#license)
 
