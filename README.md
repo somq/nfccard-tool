@@ -191,7 +191,41 @@ if (preparationWrite) {
   console.log('Data have been written successfully.')
 }
 ```
-
+Which logs:
+```json
+NDEFMessage:
+[
+  { NDEFLibRecord:
+     { LanguageCode: null,
+       text: null,
+       _typeNameFormat: 1,
+       _type: [Array],
+       _id: [],
+       _payload: [Array] },
+    type: 'text',
+    text: 'I\'m a text message',
+    language: 'en' },
+  { NDEFLibRecord:
+     { RawUri: [],
+       Uri: '',
+       _typeNameFormat: 1,
+       _type: [Array],
+       _id: [],
+       _payload: [Array],
+       type: 'U' },
+    type: 'uri',
+    uri: 'https://github.com/somq' },
+  { NDEFLibRecord:
+     { packageName: '',
+       _typeNameFormat: 4,
+       _type: [Array],
+       _id: [],
+       _payload: [Array],
+       type: 'android.com:pkg' },
+    type: 'aar',
+    packageName: 'https://github.com/somq' }
+]
+```
 ---
 
 ## API
