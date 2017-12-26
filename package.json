@@ -55,6 +55,8 @@
     "url": "git+https://github.com/somq/nfccard-parser.git"
   },
   "scripts": {
+    "read-nfcpcsc": "node examples/read-nfc-pcsc",
+    "write-nfcpcsc": "node examples/write-nfc-pcsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "0.0.4"

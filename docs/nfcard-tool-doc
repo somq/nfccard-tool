@@ -23,3 +23,13 @@ bloc 4: 037b,
 5a21,5280
 
 04c124695a215280a9480000e1106d00037b9101115402656e54657374207265636f7264
+
+
+
+
+        // @TODO: Find a solution to write 1 byte to be able to respect the NFCForum-TS-Type-2-Tag_1.1.pdf spec.
+        // if (preparationWrite) {
+        //   const secondWrite = await reader.write(4, rawDataToWrite.finalWrite)
+        // }  else {
+        //   console.log('Something went wrong while trying to perform preparation write')
+        // }
