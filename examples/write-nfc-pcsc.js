@@ -18,34 +18,36 @@ nfc.on('reader', reader => {
 
       /**
        *  1 - READ HEADER
-       *  Read block 0 to 6 in order to parse tag information
+       *  Read header: we need to verify if we have read and write permissions
+       *               and if prepared message length can fit onto the tag.
        */
-      const blocks0to6 = await reader.read(0, 23); // starts reading in block 0 until 6
+      const cardHeader = await reader.read(0, 20);
 
-      const tag = nfcCard.parseInfo(blocks0to6);
-      console.log('tag info:', tag);
+      const tag = nfcCard.parseInfo(cardHeader);
 
+        /**
+         * 2 - WRITE A NDEF MESSAGE AND ITS RECORDS
+         */
+        const message = [
+          { type: 'text', text: 'I\'m a text message', language: 'en' },
+          { type: 'uri', uri: 'https://github.com/somq' },
+          { type: 'aar', packageName: 'https://github.com/somq' },
+        ]
 
-      /**
-       * 2 - WRITE MESSAGE AND ITS RECORDS
-       */
-      const message = [
-        { type: 'text', text: 'I\'m a text message', language: 'en' },
-        { type: 'uri', uri: 'https://github.com/somq' },
-        { type: 'aar', packageName: 'https://github.com/somq' },
-      ]
+        // Prepare the buffer to write on the card
+        const rawDataToWrite = nfcCard.prepareBytesToWrite(message);
 
-      const rawDataToWrite = nfcCard.prepareBytesToWrite(message);
-      const preparationWrite = await reader.write(4, rawDataToWrite.preparedData);
-      if (preparationWrite) {
-        console.log('Data have been written successfully.')
-      }
+        // Write the buffer on the card starting at block 4
+        const preparationWrite = await reader.write(4, rawDataToWrite.preparedData);
 
-    } catch (err) {
+        // Success !
+        if (preparationWrite) {
+          console.log('Data have been written successfully.')
+        }
+
+      } catch (err) {
       console.error(`error when reading data`, err);
-    }
-
-
+      }
   });
 
 	reader.on('card.off', card => {

@@ -1,63 +1,43 @@
 {
-  "_from": "nfccard-parser",
-  "_id": "nfccard-parser@1.0.3",
-  "_inBundle": false,
-  "_integrity": "sha512-ndVdK0xlosUVNg95lWQoCAHIyQ8OoQg8kvv38qjLAeCfUrZUaN1KPii6HIO3wVr2qDlWKU/0AH+1s7o0g/06nQ==",
-  "_location": "/nfccard-parser",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "nfccard-parser",
-    "name": "nfccard-parser",
-    "escapedName": "nfccard-parser",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+  "name": "nfccard-tool",
+  "version": "0.0.1",
+  "description": "The toolbox for reading and writing nfc cards.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "lib": "lib"
   },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/nfccard-parser/-/nfccard-parser-1.0.3.tgz",
-  "_shasum": "d1809097bdb76338c17b40ecf441847febceb267",
-  "_spec": "nfccard-parser",
-  "_where": "J:\\__DevSSD__\\nfc-ndef-module\\testmod",
-  "author": {
-    "name": "somq",
-    "email": "dev.soma@protonmail.com"
-  },
-  "bugs": {
-    "url": "https://github.com/somq/nfccard-parser/issues",
-    "email": "dev.soma@protonmail.com"
-  },
-  "bundleDependencies": false,
-  "contributors": [
-    {
-      "name": "somq",
-      "email": "dev.soma@protonmail.com"
-    }
-  ],
   "dependencies": {
     "@taptrack/ndef": "^1.0.3",
     "ndef-lib": "0.0.7",
     "nfc-pcsc": "^0.6.1"
   },
-  "deprecated": false,
-  "description": "Feed me with a raw nfc card output and I will drop you tjhe ndef message if I can find one.",
   "devDependencies": {},
-  "homepage": "https://github.com/somq/nfccard-parser#readme",
-  "license": "ISC",
-  "main": "index.js",
-  "name": "nfccard-parser",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/somq/nfccard-parser.git"
-  },
   "scripts": {
     "read-nfcpcsc": "node examples/read-nfc-pcsc",
     "write-nfcpcsc": "node examples/write-nfc-pcsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.0.4"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somq/nfccard-tool.git"
+  },
+  "keywords": [
+    "NDEF",
+    "Capablity",
+    "Container",
+    "Type",
+    "2",
+    "NFC",
+    "14443",
+    "tag",
+    "card"
+  ],
+  "author": "somq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/somq/nfccard-tool/issues"
+  },
+  "homepage": "https://github.com/somq/nfccard-tool#readme"
 }

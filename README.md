@@ -1,13 +1,20 @@
-# nfccard-parser
+# nfccard-tool
 
 
-> Feed me with a raw nfc card output and I will drop you the ndef message if I can find one.
-
+> The toolbox for reading and writing nfc cards.
+> Parse card header, ndef message and records, prepare ndef records for writing...
 
 ## Table of Contents
 
 * [Install](#install)
+* [Feat ures](#features)
+* [Quick start examples](#examples)
 * [Usage](#usage)
+  * [1 - Require the lib:](#0---require-the-lib)
+  * [2 - Parse a card header:](#1---parse-a-card-header)
+  * [3 - Parse a NDEF message:](#2---parse-a-ndef-message)
+  * [4 - Prepare a NDEF message:](#3---prepare-a-ndef-message)
+* [API](#api)
 * [Third party](#thirdparty)
 * [License](#license)
 
@@ -17,144 +24,280 @@
 [npm][]:
 
 ```sh
-npm install nfccard-parser
+npm install nfccard-tool --save
 ```
 
 [yarn][]:
 
 ```sh
-yarn add nfccard-parser
+yarn add nfccard-tool --save
 ```
 
+### Require the lib:
+```js
+const nfcCard = require('nfccard-tool');
+
+```
+## Features
+
+* Parse a card header and wrap raw and human readable data in a object:
+  * Locks states
+  * Capability Container
+    * Magic number
+    * Spec version
+    * Max NDEF length
+    * Read and write accesses
+  * NDEF message detection and length
+* Parse and prepare a NDEF message of types:
+  * Text
+  * Uri
+  * Android App Record
+
+
+## Quick start examples (with the help of [nfc-pcsc](https://github.com/pokusew/nfc-pcsc))
+### Read a card header and parse a NDEF message
+
+```
+npm run read-nfcpcsc
+```
+### Write a NDEF message
+
+```
+npm run read-nfcpcsc
+```
 
 ## Usage
-### Complete example:
-#### Copy/pasta example:
+### 1 - Require the lib:
 ```js
-const ndef = require('nfccard-parser');
+const ndef = require('nfccard-tool');
 
-// Let's mock it by creating a new buffer:
-let tagBufferBlocks0to4 = new Buffer('046e38da5a215280a9480000e1106d00032ad101', 'hex');
+```
 
-// We want to parse this header
-let tagHeaderValues = ndef.parseHeader(tagBufferBlocks0to4);
+### 2 - Parse a card header:
 
-// ndef.parseHeader will return an obj containing headers statements:
-console.log(tagHeaderValues);
-  // logs:
-  // { isTagFormatedAsNdef: true,
-  //   type2TagSpecification: '6e',
-  //   maxNdefMessageSize: 128,
-  //   hasTagReadPermissions: true,
-  //   hasTagANdefMessage: true,
-  //   ndefMessageLength: 133,
-  //   tagLengthToReadFromBlock4: 135 }
+With the card reader of your choice, read from block 0 until end of block 4. Which means a 20 bytes long read.
 
-  // Check if our tag is readable and has a ndef message
-if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef && tagHeaderValues.hasTagANdefMessage) {
+> Note: before any NDEF parsing or preparing we need to parse the card header first using a **read** command.
 
-  // And here is our isolated ndef message !
-  let tagBufferFromBlock4 = new Buffer('032ad101265402656e4865792074686572652c2069276d2061206e6465662074657874207265636f72642021', 'hex');
+```js
+// Starts reading in block 0 for 20 bytes long
+const cardHeader = await reader.read(0, 20);
 
+const tag = nfcCard.parseInfo(cardHeader);
+console.log('tag info:', JSON.stringify(tag));
+```
+Which logs:
+```json
+tag info:
+{
+    "headerValues":{
+        "raw":{
+            "Lock":{
+                "LOCK0":0,
+                "LOCK1":0
+            },
+            "capabilityContainer":{
+                "MAGIC_NUMBER":225,
+                "SPEC_VERSION":16,
+                "MAX_NDEF_LENGTH":109,
+                "READ_ACCESS":0,
+                "WRITE_ACCESS":0
+            },
+            "NDEFMessageHeader":{
+                "HAS_NDEF":3,
+                "MESSAGE_LENGTH":86
+            }
+        },
+        "string":{
+            "Lock":{
+                "LOCK0":"0",
+                "LOCK1":"0"
+            },
+            "capabilityContainer":{
+                "MAGIC_NUMBER":"E1",
+                "SPEC_VERSION":"10",
+                "MAX_NDEF_LENGTH":"6D",
+                "READ_ACCESS":"0",
+                "WRITE_ACCESS":"0"
+            },
+            "NDEFMessageHeader":{
+                "HAS_NDEF":"3",
+                "MESSAGE_LENGTH":"56"
+            }
+        }
+    },
+    "parsedHeader":{
+        "isFormatedAsNDEF":true,
+        "type2SpecVersion":"1.0",
+        "maxNDEFMessageSize":872,
+        "hasReadPermissions":true,
+        "getReadPermissionsType":"HAS_READ_ACCESS",
+        "hasWritePermissions":true,
+        "writePermissionsType":"HAS_WRITE_ACCESS",
+        "hasNDEFMessage":true,
+        "NDEFMessageLength":86,
+        "lengthToReadFromBlock4":88
+    }
 
-  // ndef.parseNdef uses @taptrack/ndef which supports text and uri parsing, but you obviously can use anything to parse the ndef message
-  let parsedRecords = ndef.parseNdef(tagBufferFromBlock4);
-
-  console.log(parsedRecords)
-  // [{
-  //   language: 'en',
-  //   content: 'I\'m the first ndef record of this tag'
-  // },
-  // { language: 'en',
-  //   content: 'Looks like I\'m the second record of this tag, and a plaintext type one by the way.'
-  // }]
 }
+```
 
+### 3 - Parse a NDEF message:
+> If card header parsing let us know *there might be* a NDEF message we can try to parse it:
+
+```js
+// There might be a NDEF message and we are able to read the tag
+if(nfcCard.isFormatedAsNDEF() && nfcCard.hasReadPermissions() && nfcCard.hasNDEFMessage()) {
+
+  // Read the appropriate length to get the NDEF message as buffer
+  const NDEFRawMessage = await reader.read(4, nfcCard.getNDEFMessageLengthToRead()); // starts reading in block 0 until 6
+
+  // Parse the buffer as a NDEF raw message
+  const NDEFMessage = nfcCard.parseNDEF(NDEFRawMessage);
+
+  console.log('NDEFMessage:', NDEFMessage);
+
+} else {
+  console.log('Could not parse anything from this tag: \n The tag is either empty, locked, has a wrong NDEF format or is unreadable.')
+}
+```
+
+### 4 - Prepare a NDEF message:
+> We can use the convenient method *prepareBytesToWrite* to get the appropriate Buffer we need to write a ndef message.
+```js
+// 1 - READ HEADER
+
+// Starts reading in block 0 until end of block 4
+const cardHeader = await reader.read(0, 20);
+
+const tag = nfcCard.parseInfo(cardHeader);
+console.log('tag info:', JSON.stringify(tag));
+
+
+// 2 - WRITE A NDEF MESSAGE AND ITS RECORDS
+
+const message = [
+  { type: 'text', text: 'I\'m a text message', language: 'en' },
+  { type: 'uri', uri: 'https://github.com/somq' },
+  { type: 'aar', packageName: 'https://github.com/somq' },
+]
+
+// Prepare the buffer to write on the card
+const rawDataToWrite = nfcCard.prepareBytesToWrite(message);
+
+// Write the buffer on the card starting at block 4
+const preparationWrite = await reader.write(4, rawDataToWrite.preparedData);
+
+// Success !
+if (preparationWrite) {
+  console.log('Data have been written successfully.')
+}
 ```
 
 ---
 
-### Detailed explanations
+### API
 
-#### 1 - Require the lib:
+#### Methods
 ```js
-const ndef = require('nfccard-parser');
+// Magic number
+nfcCard.isFormatedAsNDEF();
+
+// Type 2 Tag Specification version, eg. 1.0
+nfcCard.getType2SpecVersion();
+
+// Max NDEF size for the current tag
+nfcCard.getMaxNDEFMessageLength();
+
+// Read locked ?
+nfcCard.hasReadPermissions();
+
+// Read types: HAS_READ_ACCESS, RFU, PROPRIETARY, UNKNOWN
+nfcCard.getReadPermissionsType();
+
+// Write locked ?
+nfcCard.hasWritePermissions();
+
+// Write types: HAS_READ_ACCESS, RFU, PROPRIETARY, UNKNOWN
+nfcCard.getWritePermissionsType();
+
+// NDEF message flag is present ?
+nfcCard.hasNDEFMessage();
+
+// NDEF message length on exists on the tag
+nfcCard.getNDEFMessageLength();
 
 ```
+#### tag *object*
 
-#### 2 - Parse the tag header `ndef.parseHeader(buffer)`
-In order to know where the ndef message is we parse the header:
+```json
+{
+    "headerValues":{
+        "raw":{ // Raw buffer values
+            "Lock":{
+                "LOCK0":0, // Lock 0 status - block 2, byte 2
+                "LOCK1":0 // Lock 1 status - block 2, byte 3
+            },
+            "capabilityContainer":{
+                "MAGIC_NUMBER":225, // magic number - block 3, byte 0 (CC0)
+                "SPEC_VERSION":16, // type 2 spec version - block 3, byte 1 (CC1)
+                "MAX_NDEF_LENGTH":109, // max ndef message length - block 3, byte 2 (CC2)
+                "READ_ACCESS":0, // read access - block 3, byte 3 (CC3)
+                "WRITE_ACCESS":0 // write access - block 3, byte 3 (CC3)
+            },
+            "NDEFMessageHeader":{
+                "HAS_NDEF":3, // NDEF header 0 - block 4, byte 0
+                "MESSAGE_LENGTH":86 // NDEF header 1 - block 4, byte 1
+            }
+        },
+        "string":{ // Hex string values
+            "Lock":{
+                "LOCK0":"0",
+                "LOCK1":"0"
+            },
+            "capabilityContainer":{
+                "MAGIC_NUMBER":"E1",
+                "SPEC_VERSION":"10",
+                "MAX_NDEF_LENGTH":"6D",
+                "READ_ACCESS":"0",
+                "WRITE_ACCESS":"0"
+            },
+            "NDEFMessageHeader":{
+                "HAS_NDEF":"3",
+                "MESSAGE_LENGTH":"56"
+            }
+        }
+    },
+    "parsedHeader":{
+        "isFormatedAsNDEF":true, // magic number - block 3, byte 0 (CC0)
+        "type2SpecVersion":"1.0", // type 2 spec version - block 3, byte 1 (CC1)
+        "maxNDEFMessageSize":872, // max ndef message length - block 3, byte 2
+        "hasReadPermissions":true, // read access - block 3, byte 3 (CC3)
+        "getReadPermissionsType":"HAS_READ_ACCESS",
+        "hasWritePermissions":true, // write access - block 3, byte 3 (CC3)
+        "writePermissionsType":"HAS_WRITE_ACCESS",
+        "hasNDEFMessage":true, // NDEF header 0 - block 4, byte 0
+        "NDEFMessageLength":86, // NDEF header 1 - block 4, byte 1
+        "lengthToReadFromBlock4":88 // NDEFMessageLength + 2
+    }
 
-Here is a buffer of the first 4 blocks of a nfc tag (ntag216) containg 2 ndef text records:
-
-    <Buffer 04 6e 38 da 5a 21 52 80 a9 48 00 00 e1 10 6d 00 03 85 91 01>
-
-```js
-// Let's mock it by creating a new buffer:
-let tagBufferBlocks0to4 = new Buffer('046e38da5a215280a9480000e1106d0003859101', 'hex');
-
-console.log('tagBufferBlocks0to4', tagBufferBlocks0to4);
-// logs: <Buffer 04 6e 38 da 5a 21 52 80 a9 48 00 00 e1 10 6d 00 03 85 91 01> (here we go!)
-
-
-// We want to parse this header
-// ndef.parseHeader will return an obj containing headers statements
-let tagHeaderValues = ndef.parseHeader(tagBufferBlocks0to4);
-
-console.log(tagHeaderValues);
-  // logs:
-  // { isTagFormatedAsNdef: true,
-  //   type2TagSpecification: '6e',
-  //   maxNdefMessageSize: 128,
-  //   hasTagReadPermissions: true,
-  //   hasTagANdefMessage: true,
-  //   ndefMessageLength: 133,
-  //   tagLengthToReadFromBlock4: 135 }
-
-```
-**ndef.parseHeader(buffer) returns**:
-* `isTagFormatedAsNdef` *boolean* - is tag formated as ndef ?
-* `type2TagSpecification` *string* - hex string of the type2 tag spec
-* `maxNdefMessageSize` *int* - max ndef message size provided by the tag
-* `hasTagReadPermissions` *boolean* - is tag read locked ?
-* `hasTagANdefMessage` *boolean* - tag has a ndef message ?
-* `ndefMessageLength` *int* - ndef message length
-* `tagLengthToReadFromBlock4` *int* - bytes to read starting at block 4 to get the full ndef message
-
-
-#### 3 - Parse the ndef message and it's record(s)  `ndef.parseNdef(buffer)`:
-Now that we know if our tag contains a valid ndef message we can read one more time the tag where it's located.
-Just then we will be able to use a third party library to parse the ndef message.
-```js
-
-// Check if our tag is readable and has a ndef message
-if(tagHeaderValues.hasTagReadPermissions && tagHeaderValues.isTagFormatedAsNdef && tagHeaderValues.hasTagANdefMessage) {
-  // Ok, looks like what we've seen in the header tells us we can find a ndef message
-  // Here's an example using nfc-pcsc library:
-  // var tagBufferFromBlock4 = await reader.read(4, tagHeaderValues.tagLengthToReadFromBlock4);
-  // And here is our isolated ndef message !
-  console.log(tagBufferFromBlock4);
-  // logs: <Buffer 91 01 28 54 02 65 6e 49 27 6d 20 74 68 65 20 66 69 72 73 74 20 6e 64 65 66 20 72 65 63 6f 72 64 20 6f 66 20 74 68 69 73 20 74 61 67 51 01 55 54 02 65 ... >
-
-
-
-
-  // ndef.parseNdef uses @taptrack/ndef which supports text and uri parsing, but you obviously can use anything to parse the ndef message
-  let parsedRecords = ndef.parseNdef(tagBufferFromBlock4);
-
-  console.log(parsedRecords)
-  // [{
-  //   language: 'en',
-  //   content: 'I\'m the first ndef record of this tag'
-  // },
-  // { language: 'en',
-  //   content: 'Looks like I\'m the second record of this tag, and a plaintext type one by the way.'
-  // }]
 }
 ```
 
+#### Compatibility
+
+Only a part of [Type 2 tag specification](docs/NFCForum-TS-Type-2-Tag_1.1.pdf) is implemented.
+
+This lib does not support yet:
+* Dynamical memory structure
+* Lock preparing
+* ... some are probably missing*
+
+
+```
+
 ## Third party
-We are natively using https://github.com/TapTrack/NdefJS but you could give a try at https://github.com/andijakl/ndef-nfc or have a deep look at https://github.com/googlearchive/chrome-nfc
+We are natively using [ndef-lib](https://github.com/somq/ndef-lib) for parsing but you could give a try at https://github.com/TapTrack/NdefJS or have a deep look at https://github.com/googlearchive/chrome-nfc
 
 If you are looking for a nfc tag reading library take a look at https://github.com/pokusew/nfc-pcsc
 
@@ -163,13 +306,4 @@ If you are looking for a nfc tag reading library take a look at https://github.c
 ## License
 
 [MIT](LICENSE) © somq
-
-
-##
-
-[npm]: https://www.npmjs.com/
-
-[yarn]: https://yarnpkg.com/
-
-
 
