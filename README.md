@@ -232,7 +232,7 @@ nfcCard.getNDEFMessageLength();
 ```
 #### tag *object*
 
-```json
+```js
 {
     "headerValues":{
         "raw":{ // Raw buffer values
