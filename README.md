@@ -7,7 +7,7 @@
 ## Table of Contents
 
 * [Install](#install)
-* [Feat ures](#features)
+* [Features](#features)
 * [Quick start examples](#examples)
 * [Usage](#usage)
   * [1 - Require the lib:](#0---require-the-lib)
@@ -35,11 +35,6 @@ npm install nfccard-tool --save
 yarn add nfccard-tool --save
 ```
 
-### Require the lib:
-```js
-const nfcCard = require('nfccard-tool');
-
-```
 ## Features
 
 * Parse a card header and wrap raw and human readable data in a object:
@@ -70,9 +65,9 @@ npm run read-nfcpcsc
 
 ## Usage
 ### 1 - Require the lib:
+
 ```js
 const ndef = require('nfccard-tool');
-
 ```
 
 ### 2 - Parse a card header:
@@ -198,7 +193,7 @@ if (preparationWrite) {
 
 ---
 
-### API
+## API
 
 #### Methods
 ```js
@@ -286,7 +281,7 @@ nfcCard.getNDEFMessageLength();
 }
 ```
 
-#### Compatibility
+## Compatibility
 
 Only a part of [Type 2 tag specification](docs/NFCForum-TS-Type-2-Tag_1.1.pdf) is implemented.
 
