@@ -23,13 +23,13 @@
 
 ## Install
 
-[npm][]:
+[npm](https://www.npmjs.com/):
 
 ```sh
 npm install nfccard-tool --save
 ```
 
-[yarn][]:
+[yarn](https://yarnpkg.com/):
 
 ```sh
 yarn add nfccard-tool --save
