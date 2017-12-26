@@ -1,6 +1,6 @@
 {
   "name": "nfccard-tool",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "The toolbox for reading and writing nfc cards.",
   "main": "index.js",
   "directories": {
