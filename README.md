@@ -192,7 +192,7 @@ if (preparationWrite) {
 }
 ```
 Which logs:
-```json
+```js
 NDEFMessage:
 [
   { NDEFLibRecord:
