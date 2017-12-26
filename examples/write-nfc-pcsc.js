@@ -3,7 +3,7 @@ const nfcCard = require('../lib/nfccard-tool');
 
 const { NFC } = require('nfc-pcsc');
 
-const nfc = new NFC(); // optionally you can pass logger
+const nfc = new NFC();
 
 nfc.on('reader', reader => {
 
