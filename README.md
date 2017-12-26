@@ -17,6 +17,7 @@
 * [API](#api)
   * [Methods](#methods)
   * [tag object](#tag-object)
+* [Troubleshoot](#troubleshoot)
 * [Third party](#thirdparty)
 * [License](#license)
 
@@ -290,6 +291,12 @@ This lib does not support yet:
 * Lock preparing
 * *... some are probably missing*
 
+## Troubleshoot
+>Error: *path*\node_modules\@pokusew\pcsclite\build\Release\ **pcsclite.node**
+
+```
+npm rebuild
+```
 
 ## Third party
 We are natively using [ndef-lib](https://github.com/somq/ndef-lib) for parsing but you could give a try at https://github.com/TapTrack/NdefJS or have a deep look at https://github.com/googlearchive/chrome-nfc
