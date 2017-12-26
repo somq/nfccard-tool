@@ -296,8 +296,6 @@ This lib does not support yet:
 * *... some are probably missing*
 
 
-```
-
 ## Third party
 We are natively using [ndef-lib](https://github.com/somq/ndef-lib) for parsing but you could give a try at https://github.com/TapTrack/NdefJS or have a deep look at https://github.com/googlearchive/chrome-nfc
 
