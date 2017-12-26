@@ -195,7 +195,7 @@ if (preparationWrite) {
 
 ## API
 
-#### Methods
+### Methods
 ```js
 // Magic number
 nfcCard.isFormatedAsNDEF();
@@ -225,7 +225,7 @@ nfcCard.hasNDEFMessage();
 nfcCard.getNDEFMessageLength();
 
 ```
-#### tag *object*
+### tag *object*
 
 ```js
 {
