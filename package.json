@@ -9,11 +9,12 @@
     "lib": "lib"
   },
   "dependencies": {
+    "ndef-lib": "0.0.7"
+  },
+  "devDependencies": {
     "@taptrack/ndef": "^1.0.3",
-    "ndef-lib": "0.0.7",
     "nfc-pcsc": "^0.6.1"
   },
-  "devDependencies": {},
   "scripts": {
     "read-nfcpcsc": "node examples/read-nfc-pcsc",
     "write-nfcpcsc": "node examples/write-nfc-pcsc",
