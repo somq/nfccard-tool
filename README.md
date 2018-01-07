@@ -61,7 +61,7 @@ npm run read-nfcpcsc
 ### Write a NDEF message
 
 ```
-npm run read-nfcpcsc
+npm run write-nfcpcsc
 ```
 
 ## Usage
