@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@taptrack/ndef": "^1.0.3",
-    "nfc-pcsc": "^0.6.1"
+    "nfc-pcsc": "^0.6.2"
   },
   "scripts": {
     "read-nfcpcsc": "node examples/read-nfc-pcsc",
